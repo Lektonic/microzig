@@ -10,6 +10,9 @@ chips: struct {
 },
 
 boards: struct {
+    pimoroni: struct {
+        pico_plus_2: *const microzig.Target,
+    },
     adafruit: struct {
         metro_rp2350: *const microzig.Target,
     },
@@ -156,6 +159,15 @@ pub fn init(dep: *std.Build.Dependency) Self {
             .rp2350_riscv = chip_rp2350_riscv.derive(.{}),
         },
         .boards = .{
+            .pimoroni = .{
+                .pico_plus_2 = chip_rp2350_arm.derive(.{
+                    .board = .{
+                        .name = "Pimoroni Pico Plus 2",
+                        .url = "https://shop.pimoroni.com/products/pimoroni-pico-plus-2",
+                        .root_source_file = b.path("src/boards/pimoroni_pico_plus_2_rp2350.zig"),
+                    },
+                }),
+            },
             .adafruit = .{
                 .metro_rp2350 = chip_rp2350_arm.derive(.{
                     .board = .{
